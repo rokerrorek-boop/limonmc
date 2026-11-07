@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101713">
+<title>LimonMC — Minecraft & Discord</title>
+<style>
+:root{--bg:#0b100e;--panel:#121b16;--panel2:#17231c;--line:#26372c;--green:#8be28c;--lime:#b7f7a5;--text:#edf5ee;--muted:#a6b5a8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#24452c 0,transparent 42%),var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.24;background-image:linear-gradient(45deg,transparent 46%,#8be28c12 47%,#8be28c12 53%,transparent 54%),linear-gradient(-45deg,transparent 46%,#8be28c0b 47%,#8be28c0b 53%,transparent 54%);background-size:54px 54px;animation:world-drift 24s linear infinite}
+@keyframes world-drift{from{background-position:0 0,0 0}to{background-position:108px 54px,-108px 54px}}
+
+a{color:inherit;text-decoration:none}.wrap{width:min(1080px,calc(100% - 36px));margin:auto}
+header{position:sticky;top:0;z-index:5;background:#0b100ee8;backdrop-filter:blur(14px);border-bottom:1px solid #ffffff12}
+nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:900;letter-spacing:.4px;font-size:1.25rem}.brand span{color:var(--green)}.navlinks{display:flex;gap:22px;color:var(--muted);font-size:.94rem}.navlinks a:hover{color:var(--lime)}
+.hero{padding:88px 0 64px;text-align:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid #7edb813d;background:#8be28c12;border-radius:999px;color:var(--lime);font-size:.83rem;font-weight:700}.dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}
+h1{font-size:clamp(3rem,9vw,6.2rem);line-height:1;margin:22px 0 16px;letter-spacing:-.07em}h1 span{color:var(--green)}.lead{max-width:620px;margin:0 auto;color:var(--muted);font-size:1.1rem}
+.actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:30px}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:12px 19px;border-radius:12px;font-weight:750;cursor:pointer;font:inherit}.btn.primary{background:var(--green);border-color:var(--green);color:#102013}.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.ipbox{display:flex;align-items:center;justify-content:center;gap:12px;margin:34px auto 0;padding:12px 16px;width:fit-content;max-width:100%;background:#101a14;border:1px solid var(--line);border-radius:14px}
+.online-card{display:flex;align-items:center;justify-content:center;gap:12px;width:fit-content;max-width:100%;margin:15px auto 0;padding:11px 17px;border:1px solid var(--line);border-radius:13px;background:#101a14d9;text-align:left}
+.online-card strong,.online-card small{display:block}.online-card small{color:var(--muted);font-size:.82rem}.online-indicator{width:10px;height:10px;flex:0 0 10px;border-radius:50%;background:#e4b75b;box-shadow:0 0 12px currentColor;animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.45;transform:scale(.82)}}
+.ipbox small{display:block;color:var(--muted);font-size:.72rem;text-align:left}.ipbox strong{font-size:1.1rem;letter-spacing:.4px}
+section{padding:38px 0}.section-head{text-align:center;margin-bottom:24px}.section-head h2{font-size:2rem;letter-spacing:-.04em;margin:0 0 6px}.section-head p{color:var(--muted);margin:0}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{padding:22px;background:linear-gradient(145deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:18px}.card .ico{font-size:1.55rem}.card h3{margin:8px 0 4px}.card p{margin:0;color:var(--muted);font-size:.94rem}
+.rules{max-width:850px;margin:auto}.tabs{display:flex;justify-content:center;gap:10px;margin-bottom:18px}.tab{padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--muted);font-weight:750;cursor:pointer}.tab.active{background:#8be28c18;color:var(--lime);border-color:#8be28c70}
+.rule-panel{display:none}.rule-panel.active{display:block}.rule{padding:20px;margin:12px 0;background:var(--panel);border:1px solid var(--line);border-radius:16px}.rule h3{margin:0 0 9px;color:var(--lime);font-size:1.05rem}.rule ul{margin:0;padding-left:21px;color:#d4dfd5}.rule li{margin:5px 0}.note{color:var(--muted);font-size:.9rem}
+.join{margin:34px auto 70px;padding:34px;text-align:center;border:1px solid #8be28c40;border-radius:22px;background:linear-gradient(135deg,#18301e,#111a14)}.join h2{font-size:2rem;margin:0 0 8px}.join p{color:var(--muted);margin:0 0 20px}
+footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:.88rem}.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:700px){.navlinks{gap:12px;font-size:.82rem}.cards{grid-template-columns:1fr}.hero{padding:65px 0 45px}.join{padding:26px 18px}.ipbox{width:100%}}
+@media(max-width:420px){.navlinks a:nth-child(2){display:none}.brand{font-size:1.08rem}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><nav><a class="brand" href="#">🍋 <span>Limon</span>MC</a><div class="navlinks"><a href="#serwer">Serwer</a><a href="#regulamin">Regulamin</a><a href="#dolacz">Dołącz</a></div></nav></div></header>
+<main>
+<div class="wrap">
+<section class="hero" id="serwer">
+<div class="eyebrow"><span class="dot"></span> MINECRAFT • DISCORD • SPOŁECZNOŚĆ</div>
+<h1>Witaj na <span>LimonMC</span></h1>
+<p class="lead">Dołącz do naszej społeczności, poznaj graczy i przeżyj przygodę na serwerze. Wszystko, czego potrzebujesz, znajdziesz w jednym miejscu.</p>
+<div class="actions"><button class="btn primary" onclick="copyIP()">Kopiuj IP serwera</button><a class="btn" href="https://discord.gg/FCPwd5RFEv" target="_blank" rel="noopener noreferrer">Dołącz na Discord</a><a class="btn" href="#regulamin">Przeczytaj regulamin</a></div>
+<div class="ipbox"><div><small>ADRES SERWERA MINECRAFT</small><strong id="server-ip">limonmc.pl</strong></div><button class="btn" onclick="copyIP()">Kopiuj</button></div>
+<p class="note" id="copy-status" aria-live="polite"></p>
+<div class="online-card" aria-live="polite">
+  <span class="online-indicator"></span>
+  <div><strong id="server-status">Sprawdzam status serwera…</strong><small id="player-count">Pobieranie liczby graczy</small></div>
+</div>
+</section>
+<section>
+<div class="section-head"><h2>Jedna społeczność. Dwa miejsca.</h2><p>Graj razem z nami i bądź na bieżąco.</p></div>
+<div class="cards">
+<article class="card"><div class="ico">⛏️</div><h3>Serwer Minecraft</h3><p>Wbij na limonmc.pl i dołącz do rozgrywki z innymi graczami.</p></article>
+<article class="card"><div class="ico">💬</div><h3>Discord</h3><p>Rozmawiaj ze społecznością, śledź ogłoszenia i kontaktuj się z administracją.</p></article>
+<article class="card"><div class="ico">🛡️</div><h3>Fair play</h3><p>Przestrzegaj zasad, graj uczciwie i dbaj o dobrą atmosferę.</p></article>
+</div>
+</section>
+<section id="regulamin">
+<div class="section-head"><h2>Regulaminy</h2><p>Zapoznaj się z zasadami przed rozpoczęciem gry i rozmów na Discordzie.</p></div>
+<div class="rules">
+<div class="tabs" role="tablist"><button class="tab active" role="tab" aria-selected="true" onclick="showRules('mc',this)">⛏ Minecraft</button><button class="tab" role="tab" aria-selected="false" onclick="showRules('dc',this)">💬 Discord</button></div>
+<div class="rule-panel active" id="mc">
+<article class="rule"><h3>§1 Zasady ogólne</h3><ul>
+<li>Wchodząc na serwer, akceptujesz regulamin.</li><li>Nieznajomość regulaminu nie zwalnia z jego przestrzegania.</li><li>Administracja podejmuje ostateczne decyzje w sytuacjach spornych.</li><li>Regulamin może zostać zmieniony w dowolnym momencie.</li></ul></article>
+<article class="rule"><h3>§2 Zachowanie na serwerze</h3><ul>
+<li>Zakaz obrażania, wyzywania i prowokowania innych graczy.</li><li>Zakaz rasizmu, homofobii oraz treści +18.</li><li>Zakaz obrażania serwera i jego społeczności.</li><li>Zakaz spamu i floodowania czatu.</li><li>Zakaz reklamowania innych serwerów bez zgody administracji.</li><li>Zakaz podszywania się pod administrację.</li></ul></article>
+<article class="rule"><h3>§3 Cheatowanie i modyfikacje</h3><ul>
+<li>Zakaz farmienia killi na jednej osobie.</li><li>Zakaz używania cheatów, m.in. KillAura, Fly, X-Ray i AutoClicker.</li><li>Zakaz używania makr, w tym TinyTask.</li><li>Zakaz wykorzystywania błędów serwera lub Minecrafta.</li><li>Nielegalne trapy są zabronione.</li><li>Dozwolone są OptiFine, shadery i texturepacki, o ile nie dają nieuczciwej przewagi (np. X-Ray lub ESP).</li><li>Administracja może poprosić o sprawdzenie (SS).</li></ul></article>
+<article class="rule"><h3>§4 Kary</h3><ul>
+<li>Za złamanie regulaminu grozi ostrzeżenie, mute, kick, ban czasowy lub ban permanentny.</li><li>Próba omijania bana może skutkować banem permanentnym.</li></ul></article>
+<article class="rule"><h3>§5 Handel i przedmioty</h3><ul>
+<li>Administracja nie odpowiada za oszustwa między graczami.</li><li>Zakaz sprzedaży kont i przedmiotów za prawdziwe pieniądze.</li><li>Zakaz duplikowania przedmiotów i używania maszyn do kopiowania.</li><li>Zakaz multikont. Jeśli z jednego łącza korzysta rodzeństwo lub występuje inna uzasadniona sytuacja, zgłoś to administracji w tickecie.</li><li>Zakaz żądania zwrotu pieniędzy bez wcześniejszego kontaktu z administracją.</li></ul></article>
+</div>
+<div class="rule-panel" id="dc">
+<article class="rule"><h3>§1 Postanowienia ogólne</h3><ul>
+<li>Serwer Discord jest oficjalnym serwerem społeczności LimonMC.</li><li>Dołączając na serwer, akceptujesz niniejszy regulamin.</li><li>Regulamin obowiązuje wszystkich użytkowników bez wyjątku.</li><li>Nieznajomość regulaminu nie zwalnia z jego przestrzegania.</li></ul></article>
+<article class="rule"><h3>§2 Zasady ogólne</h3><ul>
+<li>Zakaz obrażania, wyzywania, prowokowania i szerzenia nienawiści.</li><li>Zakaz spamu: wiadomości, emoji, CAPS LOCK, floodu i nadmiernego pingowania.</li><li>Zakaz wysyłania treści NSFW, 18+, gore oraz innych nieodpowiednich materiałów.</li><li>Zakaz reklamowania innych serwerów i mediów społecznościowych bez zgody administracji.</li><li>Zakaz podszywania się pod administrację lub innych graczy.</li><li>Zakaz wysyłania podejrzanych linków i prób wyłudzania danych.</li><li>Zakaz oznaczania administracji bez uzasadnionej potrzeby.</li></ul></article>
+<article class="rule"><h3>§3 Kanały i porządek</h3><ul>
+<li>Używaj kanałów zgodnie z ich przeznaczeniem i trzymaj się tematu danego kanału.</li><li>Sprawy prywatne załatwiaj w wiadomościach prywatnych lub poprzez ticket, jeśli jest dostępny.</li></ul></article>
+<article class="rule"><h3>§4 Administracja</h3><ul>
+<li>Administracja może usuwać wiadomości, nadawać ostrzeżenia, wyciszenia oraz bany czasowe i permanentne.</li><li>Omijanie kar, np. przez multikonta, może skutkować permanentnym banem.</li><li>Próba ucieczki poza mapę na BoxPvP może zakończyć się banem.</li><li>Nabijanie killi na innych osobach może skutkować resetem statystyk i banem.</li><li>Wiadomości naruszające regulamin mogą zostać wykorzystane przy rozpatrywaniu sprawy, niezależnie od tego, kto rozpoczął konflikt.</li></ul></article>
+<article class="rule"><h3>§5 System kar</h3><ul><li>Ostrzeżenie.</li><li>Wyciszenie.</li><li>Ban czasowy.</li><li>Ban permanentny.</li><li>Rodzaj kary zależy od stopnia naruszenia regulaminu.</li></ul></article>
+<article class="rule"><h3>§6 Postanowienia końcowe</h3><ul><li>Administracja zastrzega sobie prawo do zmiany regulaminu w dowolnym momencie, bez wcześniejszego powiadomienia.</li><li>Regulamin wchodzi w życie z dniem opublikowania.</li></ul></article>
+</div>
+<p class="note">Administracja zastrzega sobie prawo do zmiany regulaminów.</p>
+</div>
+</section>
+<section class="join" id="dolacz"><h2>Dołącz do LimonMC!</h2><p>Adres serwera: <strong>limonmc.pl</strong><br>Link zaproszenia Discord można dodać po jego otrzymaniu.</p><button class="btn primary" onclick="copyIP()">Kopiuj IP: limonmc.pl</button></section>
+</div>
+</main>
+<footer><div class="wrap foot"><span>© <span id="year"></span> LimonMC</span><span>Strona społeczności serwera Minecraft</span></div></footer>
+<script>
+function copyIP(){const status=document.getElementById('copy-status');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText('limonmc.pl').then(()=>{status.textContent='Skopiowano IP: limonmc.pl';}).catch(()=>{status.textContent='Adres serwera: limonmc.pl';});}else{status.textContent='Adres serwera: limonmc.pl';}}
+function showRules(id,button){document.querySelectorAll('.rule-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false')});document.getElementById(id).classList.add('active');button.classList.add('active');button.setAttribute('aria-selected','true');}
+async function updateServerStatus(){
+  const status=document.getElementById('server-status');
+  const players=document.getElementById('player-count');
+  const light=document.querySelector('.online-indicator');
+  try{
+    const response=await fetch('https://api.mcsrvstat.us/3/limonmc.pl');
+    if(!response.ok) throw new Error('Status API unavailable');
+    const data=await response.json();
+    if(data.online){
+      status.textContent='Serwer jest online';
+      players.textContent='Gracze online: '+(data.players?.online ?? 0)+' / '+(data.players?.max ?? '?');
+      light.style.background='#8be28c';
+    }else{
+      status.textContent='Serwer jest offline';
+      players.textContent='Aktualnie nie można dołączyć';
+      light.style.background='#ef7777';
+    }
+  }catch(error){
+    status.textContent='Nie udało się sprawdzić statusu';
+    players.textContent='Spróbuj ponownie za chwilę';
+    light.style.background='#e4b75b';
+  }
+}
+updateServerStatus();
+setInterval(updateServerStatus,60000);
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
